@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NGO Login</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* LOGIN CARD */
+.card {
+  width: 380px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  text-align: center;
+  animation: fadeIn 0.7s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card h2 {
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.card p.subtitle {
+  margin-bottom: 25px;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* INPUTS */
+.input-box {
+  text-align: left;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #888;
+  transition: 0.3s;
+}
+
+.toggle-password:hover {
+  color: #1abc9c;
+}
+
+.input-box label {
+  font-size: 14px;
+  color: #555;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.input-box input:focus {
+  outline: none;
+  border-color: #1abc9c;
+  box-shadow: 0 0 0 3px rgba(26,188,156,0.2);
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* ERROR */
+#error {
+  margin-top: 15px;
+  color: #e74c3c;
+  font-size: 14px;
+}
+
+/* FOOTER TEXT */
+.footer-text {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #888;
+}
+
+.back-link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #1abc9c;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.back-link:hover {
+  color: #16a085;
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>NGO Member Login</h2>
+  <p class="subtitle">Access the donation & resource dashboard</p>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="input-box">
+      <label>Username</label>
+      <input name="username" placeholder="Enter username" required>
+    </div>
+
+    <div class="input-box">
+      <label>Password</label>
+      <input id="password" name="password" type="password" placeholder="Enter password" required>
+      <span class="toggle-password" onclick="togglePassword()">👁️</span>
+    </div>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <a href="{% url 'index' %}" class="back-link">← Back to Index Page</a>
+
+  {% if error %}
+    <div id="error">{{ error }}</div>
+  {% endif %}
+
+  <div class="footer-text">
+    Authorized NGO Members Only
+  </div>
+</div>
+
+<script>
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const toggleIcon = document.querySelector('.toggle-password');
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    toggleIcon.textContent = '🙈';
+  } else {
+    passwordInput.type = 'password';
+    toggleIcon.textContent = '👁️';
+  }
+}
+</script>
+
+</body>
+</html>
